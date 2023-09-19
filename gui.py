@@ -31,8 +31,8 @@ def merge_subtitles(left_files, right_files, output_folder = None, output_filena
         file1_name = temp_file1.name
         temp_file1_path = temp_file1.name
         temp_file2_path = temp_file2.name
-        print('1', temp_file1_path)
-        print('2', temp_file2_path)
+        # print('1', temp_file1_path)
+        # print('2', temp_file2_path)
         if not output_filename:
             temp_filename = f"merged_{os.path.basename(file1_name)}"
         else:

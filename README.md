@@ -6,12 +6,12 @@ SRT Merger allows you to merge subtitle files, no matter what language are the s
 ### How to works?
     1. install python
 
-    #### = windows =
+    = windows =
 
     2-1. run `install.cmd`(install dependency)
     3-1. run `run.cmd`
 
-    #### = linux =
+    = linux =
 
     2-2. run `install.sh`(install dependency)
     3-2. run `run.sh`

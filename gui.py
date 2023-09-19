@@ -11,8 +11,10 @@ def merge_subtitles(left_files, right_files, output_folder = None, output_filena
     if len(left_files) != len(right_files):
         return "The number of files in the two lists is not the same."
     
-    left_files = sorted(left_files, key=lambda x: x.name)
-    right_files = sorted(right_files, key=lambda x: x.name)
+    # 파일명만 추출하여 정렬
+    left_files = sorted(left_files, key=lambda x: os.path.basename(x.name))
+    right_files = sorted(right_files, key=lambda x: os.path.basename(x.name))
+    
     # output_folder 값이 비어있거나 None이라면 기본값으로 설정
     if not output_folder:
         output_folder = os.path.join(os.getcwd(), 'outputs')
@@ -29,6 +31,8 @@ def merge_subtitles(left_files, right_files, output_folder = None, output_filena
         file1_name = temp_file1.name
         temp_file1_path = temp_file1.name
         temp_file2_path = temp_file2.name
+        print('1', temp_file1_path)
+        print('2', temp_file2_path)
         if not output_filename:
             temp_filename = f"merged_{os.path.basename(file1_name)}"
         else:

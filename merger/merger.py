@@ -4,6 +4,7 @@
 import datetime
 import codecs
 import re
+import os
 
 RED = '#FF003B'
 BLUE = '#00ADFF'
@@ -77,8 +78,10 @@ class Merger():
                 time = dialog.split('\n', 2)[1].split('-->')[0].split(',')[0]
             except Exception as e:
                 continue
-            timestamp = datetime.datetime.strptime(
-                time, '%H:%M:%S').timestamp()
+            if ',' in time:
+                timestamp = datetime.datetime.strptime(time, '%H:%M:%S,%f')
+            else:
+                timestamp = datetime.datetime.strptime(time, '%H:%M:%S')
             text_and_time = dialog.split('\n', 1)[1]
             texts = text_and_time.split('\n')[1:]
             time = text_and_time.split('\n')[0]
@@ -127,7 +130,10 @@ class Merger():
             self.subtitles.append(subtitle)
 
     def get_output_path(self):
-        if self.output_path.endswith('/'):
+        if not os.path.exists(self.output_path):
+            os.makedirs(self.output_path)
+        
+        if self.output_path.endswith(('/', '\\')):
             return self.output_path + self.output_name
         return self.output_path + '/' + self.output_name
 
@@ -161,11 +167,11 @@ class Merger():
         with open(self.get_output_path(), 'w', encoding=self.output_encoding) as output:
             output.buffer.writelines(self.lines)
             print("'%s'" % (output.name), 'created successfully.')
-
-
-# How to use?
-#
-# m = Merger(output_name="new.srt")
-# m.add('./test_srt/en.srt')
-# m.add('./test_srt/fa.srt', color="yellow", codec="cp1256", top=True)
-# m.merge()
+            
+            
+    def merge_files(self, file1, file2, output_directory, output_filename):
+        self.output_path = output_directory
+        self.output_name = output_filename
+        self.add(file1)
+        self.add(file2)
+        self.merge()

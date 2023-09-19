@@ -113,6 +113,14 @@ class Merger():
             print('Problem in "%s" to encoing by %s. \nError: %s' %
                   (repr(text), codec, e))
             return b'An error has been occured in encoing by specifed `output_encoding`'
+        
+    def reset(self):
+        """
+        Reset the current state of the merger.
+        """
+        self.timestamps = []
+        self.subtitles = []
+        self.lines = []
 
     def add(self, subtitle_address, codec="utf-8", color=WHITE, top=False):
         subtitle = {
@@ -170,6 +178,7 @@ class Merger():
             
             
     def merge_files(self, file1, file2, output_directory, output_filename):
+        self.reset()
         self.output_path = output_directory
         self.output_name = output_filename
         self.add(file1)

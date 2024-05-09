@@ -1,2 +1,2 @@
-REM call "G:\programming\personal\srtmerger\.venv\Scripts\activate.bat"
+call "G:\programming\personal\srtmerger\.venv\Scripts\activate.bat"
 python gui.py

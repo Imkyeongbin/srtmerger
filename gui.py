@@ -2,6 +2,7 @@ from merger.merger import Merger
 import gradio as gr
 import os
 import tempfile
+import argparse  # argparse 모듈을 임포트
 temp_file = tempfile.NamedTemporaryFile(delete=False)
 
 
@@ -50,6 +51,11 @@ def open_folder(folder_path: str):
     else:
         print(f"The folder {folder_path} does not exist.")
 
+parser = argparse.ArgumentParser(description="Launch the Gradio app")
+parser.add_argument("--expose", action="store_true", help="launch expose")
+parser.add_argument("--share", action="store_true", help="share this gradio")
+
+args = parser.parse_args()
 
 interface = gr.Interface(
     fn=merge_subtitles,
@@ -63,6 +69,4 @@ interface = gr.Interface(
     outputs=gr.Textbox(label="Result")
              
 )
-
-
-interface.launch()
+interface.launch(share=args.share, server_name="0.0.0.0" if args.expose else None, server_port = 27680)
